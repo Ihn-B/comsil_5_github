@@ -1,0 +1,21 @@
+if [ $# -eq 0 ]
+then
+    echo "Usage: phone searchfor [...searchfor]"
+    echo "(You didn't tell me what you want to search for.)"
+else
+    count=0
+    return="("
+
+    for arg in "$@"
+    do
+
+        ((count++))
+        if [ $count -eq $# ]
+        then
+            return="$return$arg)"
+        else
+            return="$return$arg|"
+        fi
+    done
+    egrep "$return" "$HOME/mydata.txt" | awk -f display.awk
+fi
